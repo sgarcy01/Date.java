@@ -25,7 +25,7 @@ public Date (int dia, int mes, int anyo) throws DateException{
         case 8:
         case 10:
         case 12:
-            if (dia > 1 && dia < 31){
+            if (dia >= 1 && dia <= 31){
                 this.dia=dia;
             } else{
                 throw new DateException("el dia"+dia+"no existe al menos en este mes"+mes);    
@@ -33,7 +33,7 @@ public Date (int dia, int mes, int anyo) throws DateException{
             this.mes=mes;
             break;
         case 2: 
-            if (dia >1 && dia < 29){
+            if (dia >=1 && dia <= 29){
                 this.dia = dia;
             } else{
                 throw new DateException("el dia" +dia+ "no es valido al menos en este mes"+mes);    
@@ -44,7 +44,7 @@ public Date (int dia, int mes, int anyo) throws DateException{
         case 6:
         case 9:
         case 11:
-            if (dia > 1 || dia < 30){
+            if (dia >= 1 || dia <= 30){
                 this.dia = dia;
             } else{
                 throw new DateException("el dia" +dia+ "no es valido al menos en este mes"+mes);    
@@ -243,5 +243,157 @@ public String getEstcionNombre(){
     }
     return salida.toString();
 }
+public String getMesLeft(){
+    StringBuilder salida = new StringBuilder();
+    int aux = this.mes;
+    if (this.mes == 12){
+        salida.append("0 meses left");
+    } for (int i= this.mes+1; i <= 12; i++){
+        this.mes+=1;
+        salida.append(getMesNombre());
+        salida.append("");
+    }
+    this.mes = aux;
+    return salida.toString();
+}
+public String getDiasLeftMes(){
+    StringBuilder salida = new StringBuilder();
+    switch (this.mes) {
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+            for (int i=this.dia+1; i<=31 ; ++i) {
+                salida.append(i + "/"+ this.mes+"/"+this.anyo);
+                salida.append(" ");
+            }
+            break;
+        case 2:
+            for (int i=this.dia+1; i<=28 ; ++i ) {
+                
+                salida.append(i + "/"+ this.mes+"/"+this.anyo);
+                salida.append(" ");
+            }
+            break;
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            for (int i=this.dia+1; i<=30 ; ++i ) { 
+                salida.append(i + "/"+ this.mes+"/"+this.anyo);
+                salida.append(" ");
+            }
+            break;
+    }
+    return salida.toString();
+}
+public String getMesCoincidenDias(){
+    StringBuilder salida= new StringBuilder();
+    switch (this.mes) {
+        case 1:
+        salida.append("enero");
+        break;
+        case 3:
+        salida.append("marzo");
+        break;
+        case 5:
+        salida.append("mayo");
+        break;
+        case 7:
+        salida.append("julio");
+        break;
+        case 8:
+        salida.append("agosto");
+        break;
+        case 10:
+        salida.append("octubre");
+        break;
+        case 12:
+            salida.append(" diciembre");
+            break;
+        case 2:
+            salida.append("Febrero");
+            break;
+        case 4: 
+        salida.append("abril");
+        break;
+        case 6:
+        salida.append("junio");
+        break;
+        case 9:
+        salida.append("septiembre");
+        break;
+        case 11:
+            salida.append("noviembre");
+            break;
+    }
+    return salida.toString();
+}
+public int diasPasan(){
+    int diasParaEmpezar=0;
+        for (int i =1; i<this.mes ; i++) {
+         switch (i) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+                diasParaEmpezar += 31;
+                break;
+            case 2:
+                diasParaEmpezar += 28;
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                diasParaEmpezar += 30;
+                break;
+         }
+    } 
+    return diasParaEmpezar;
+}
+public int numRandomEqualDate(){	
+    int randomDia=365;
+    int intentos =0;
+    while(this.dia != randomDia) {
+        randomDia = (int)(Math.random()*((364-0)+1))+0;
+        intentos++;
+    }
+    return intentos;
+}
+public String diaDeSemana(int primerDiaDeAnyo){
+    StringBuilder salida = new StringBuilder();  
+    int diaDeSemana = (this.dia %7)+primerDiaDeAnyo;
+        switch (primerDiaDeAnyo) {
+            case 7:
+                salida.append("domingo");
+                break;
+            case 1:
+                salida.append("lunes");
+                break;
+            case 2:
+                salida.append("martes");
+                break;
+            case 3:	
+                salida.append("miercoles");
+                break;
+            case 4:
+                salida.append("jueves");
+                break;
+            case 5:
+                salida.append("viernes");
+                break;
+            case 6:
+                salida.append("sabado");
+                break;
+        }
+    return salida.toString();
+}
+
 }
 
